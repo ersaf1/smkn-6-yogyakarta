@@ -1,48 +1,51 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="bg-primary text-white py-12">
-    <div class="container mx-auto px-4">
-        <h1 class="text-3xl font-bold">Ekstrakulikuler</h1>
-        <p class="text-white/70 mt-2"><a href="{{ route('home') }}" class="hover:underline">Home</a> / Ekstrakulikuler</p>
+{{-- Banner --}}
+<div class="relative bg-secondary text-white overflow-hidden">
+    <img src="{{ asset('images/banner.jpg') }}" alt="" class="absolute inset-0 w-full h-full object-cover opacity-30">
+    <div class="relative container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-bold">Ekstrakulikuler</h1>
+        <p class="text-white/70 mt-1 text-sm">
+            <a href="{{ route('home') }}" class="hover:underline">Home</a>
+            <span class="mx-1">/</span>
+            Ekstrakulikuler
+        </p>
     </div>
 </div>
 
-<div class="container mx-auto px-4 py-12">
+<div class="container mx-auto px-4 py-10">
     @if($extracurriculars->count() > 0)
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        @foreach($extracurriculars as $extracurricular)
-            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                @if($extracurricular->image)
-                    <img src="{{ Storage::url($extracurricular->image) }}" alt="{{ $extracurricular->name }}" class="w-full h-48 object-cover">
-                @endif
-                <div class="p-6">
-                    <h3 class="font-bold text-lg text-gray-800 mb-2">{{ $extracurricular->name }}</h3>
-                    @if($extracurricular->coach)
-                        <p class="text-sm text-gray-600 mb-1"><strong>Pembina:</strong> {{ $extracurricular->coach }}</p>
-                    @endif
-                    @if($extracurricular->schedule)
-                        <p class="text-sm text-gray-600 mb-3"><strong>Jadwal:</strong> {{ $extracurricular->schedule }}</p>
-                    @endif
-                    @if($extracurricular->description)
-                        <p class="text-gray-600 text-sm line-clamp-3">{{ $extracurricular->description }}</p>
-                    @endif
-                </div>
+        @foreach($extracurriculars as $ekskul)
+        <div class="bg-white rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
+            @if($ekskul->image)
+            <div class="overflow-hidden">
+                <img src="{{ Storage::url($ekskul->image) }}" alt="{{ $ekskul->name }}"
+                     class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
             </div>
+            @else
+            <div class="w-full h-48 bg-secondary/10 flex items-center justify-center">
+                <svg class="w-12 h-12 text-secondary/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </div>
+            @endif
+            <div class="p-5">
+                <h3 class="font-bold text-gray-800 mb-2">{{ $ekskul->name }}</h3>
+                <p class="text-gray-600 text-sm line-clamp-2 mb-3">{{ $ekskul->description }}</p>
+                @if($ekskul->schedule)
+                <p class="text-xs text-primary"><span class="font-medium">Jadwal:</span> {{ $ekskul->schedule }}</p>
+                @endif
+                @if($ekskul->coach)
+                <p class="text-xs text-gray-400 mt-1">Pembina: {{ $ekskul->coach }}</p>
+                @endif
+            </div>
+        </div>
         @endforeach
     </div>
     @else
-    <div class="text-center py-12 text-gray-500">
-        <p>Belum ada data ekstrakulikuler.</p>
-    </div>
+    <div class="text-center py-16 text-gray-400">Belum ada data ekstrakulikuler.</div>
     @endif
 </div>
 @endsection
-
-
-
-
-
-
-
-

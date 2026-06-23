@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('subtitle')->nullable();
             $table->string('button_text')->nullable();
             $table->string('button_url')->nullable();
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->integer('order')->default(0);
             $table->boolean('is_active')->default(true);
             $table->softDeletes();

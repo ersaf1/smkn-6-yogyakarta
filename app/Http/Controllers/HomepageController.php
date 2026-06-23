@@ -9,6 +9,7 @@ use App\Models\Partner;
 use App\Models\Setting;
 use App\Models\Slider;
 use App\Models\Statistic;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class HomepageController extends Controller
@@ -25,6 +26,7 @@ class HomepageController extends Controller
             ->limit(3)
             ->get();
         $partners = Partner::where('is_active', true)->orderBy('order')->get();
+        $videos = Video::where('is_active', true)->orderBy('order')->limit(3)->get();
 
         $kepalaSekolahName = Setting::get('kepala_sekolah_name', 'Mujari, S.Pd, M.Pd');
         $kepalaSekolahPhoto = Setting::get('kepala_sekolah_photo', '');
@@ -32,7 +34,7 @@ class HomepageController extends Controller
 
         return view('homepage', compact(
             'sliders', 'accordions', 'competencies', 'statistics',
-            'news', 'partners', 'kepalaSekolahName', 'kepalaSekolahPhoto',
+            'news', 'partners', 'videos', 'kepalaSekolahName', 'kepalaSekolahPhoto',
             'sambutanText'
         ));
     }

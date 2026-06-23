@@ -12,10 +12,11 @@ class SettingSeeder extends Seeder
         $settings = [
             // General
             ['group' => 'general', 'key' => 'site_name', 'value' => 'SMK Negeri 6 Yogyakarta', 'type' => 'text'],
-            ['group' => 'general', 'key' => 'logo', 'value' => '', 'type' => 'image'],
+            ['group' => 'general', 'key' => 'logo', 'value' => 'images/logo.png', 'type' => 'image'],
             ['group' => 'general', 'key' => 'favicon', 'value' => '', 'type' => 'image'],
             ['group' => 'general', 'key' => 'kepala_sekolah_name', 'value' => 'Mujari, S.Pd, M.Pd', 'type' => 'text'],
-            ['group' => 'general', 'key' => 'kepala_sekolah_photo', 'value' => '', 'type' => 'image'],
+            ['group' => 'general', 'key' => 'kepala_sekolah_photo', 'value' => 'images/staff/kepala-sekolah.png', 'type' => 'image'],
+            ['group' => 'general', 'key' => 'kepala_sekolah_title', 'value' => 'Kepala Sekolah', 'type' => 'text'],
             ['group' => 'general', 'key' => 'sambutan_text', 'value' => 'Dengan memanjatkan puji syukur ke hadirat Tuhan Yang Maha Esa akhirnya kami dapat menyelesaikan revisi website SMK N 6 Yogyakarta. Website ini dapat terselesaikan dengan baik berkat kerjasama dari berbagai pihak terutama Bapak/Ibu Guru SMK Negeri 6 Yogyakarta.', 'type' => 'textarea'],
 
             // Contact

@@ -21,6 +21,7 @@ Route::get('/berita/{slug}', [NewsController::class, 'show'])->name('news.show')
 Route::get('/galeri-foto', [GalleryController::class, 'index'])->name('gallery.index');
 
 Route::get('/guru-karyawan', [TeacherController::class, 'index'])->name('teachers.index');
+Route::get('/guru-karyawan/{id}', [TeacherController::class, 'show'])->name('teachers.show');
 
 Route::get('/kompetensi-keahlian', [CompetencyController::class, 'index'])->name('competencies.index');
 Route::get('/kompetensi-keahlian/{slug}', [CompetencyController::class, 'show'])->name('competencies.show');
@@ -28,6 +29,7 @@ Route::get('/kompetensi-keahlian/{slug}', [CompetencyController::class, 'show'])
 Route::get('/prestasi', [AchievementController::class, 'index'])->name('achievements.index');
 
 Route::get('/ekstrakulikuler', [ExtracurricularController::class, 'index'])->name('extracurriculars.index');
+Route::get('/ekstrakulikuler/{slug}', [ExtracurricularController::class, 'show'])->name('extracurriculars.show');
 
 Route::get('/video', [VideoController::class, 'index'])->name('videos.index');
 

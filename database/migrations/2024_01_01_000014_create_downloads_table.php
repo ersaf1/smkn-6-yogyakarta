@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->string('file');
+            $table->string('file')->nullable();
             $table->string('file_type')->nullable();
             $table->integer('download_count')->default(0);
             $table->integer('order')->default(0);

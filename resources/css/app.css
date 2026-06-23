@@ -7,14 +7,45 @@
 @source "../**/*.vue";
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
-    --color-primary: #2872fa;
-    --color-primary-dark: #1559ed;
-    --color-accent: #E08F14;
-    --color-dark: #192a3d;
+    --color-primary: #D89216;
+    --color-primary-dark: #B87A10;
+    --color-secondary: #1E2D4D;
+    --color-accent: #D89216;
+    --color-dark: #151515;
     --color-text: #3A4F66;
     --color-light: #e1e8ed;
-    --color-lighter: #f2f5f7;
+    --color-lighter: #F4F5F7;
     --color-lightest: #FAFBFC;
+}
+
+@layer base {
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #F4F5F7;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 700;
+        color: #1E2D4D;
+    }
+}
+
+@layer utilities {
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .line-clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    /* Smooth accordion flex transition */
+    .accordion-panel {
+        transition: flex 0.5s ease;
+    }
 }

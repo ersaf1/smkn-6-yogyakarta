@@ -1,60 +1,54 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="bg-primary text-white py-12">
-    <div class="container mx-auto px-4">
-        <h1 class="text-3xl font-bold">Galeri Foto</h1>
-        <p class="text-white/70 mt-2"><a href="{{ route('home') }}" class="hover:underline">Home</a> / Galeri Foto</p>
+{{-- Banner --}}
+<div class="relative bg-secondary text-white overflow-hidden">
+    <img src="{{ asset('images/banner.jpg') }}" alt="" class="absolute inset-0 w-full h-full object-cover opacity-30">
+    <div class="relative container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-bold">Galeri Foto</h1>
+        <p class="text-white/70 mt-1 text-sm">
+            <a href="{{ route('home') }}" class="hover:underline">Home</a>
+            <span class="mx-1">/</span>
+            Galeri Foto
+        </p>
     </div>
 </div>
 
-<div class="container mx-auto px-4 py-12">
-    <!-- Category Filter -->
-    @if($categories->count() > 0)
-    <div class="flex flex-wrap gap-2 mb-8">
-        <a href="{{ route('gallery.index') }}" class="px-4 py-2 rounded-full text-sm font-medium {{ !request('category') ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }} transition-colors">
-            Semua
-        </a>
-        @foreach($categories as $category)
-            <a href="{{ route('gallery.index', ['category' => $category->slug]) }}" class="px-4 py-2 rounded-full text-sm font-medium {{ request('category') === $category->slug ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }} transition-colors">
-                {{ $category->name }}
-            </a>
-        @endforeach
-    </div>
-    @endif
-
-    <!-- Gallery Grid -->
+<div class="container mx-auto px-4 py-10">
     @if($galleries->count() > 0)
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        @foreach($galleries as $gallery)
-            <div class="group relative overflow-hidden rounded-lg aspect-square cursor-pointer" x-data="{ open: false }" @click="open = true">
-                <img src="{{ Storage::url($gallery->image) }}" alt="{{ $gallery->title }}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
-                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-end">
-                    <div class="p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        @if($gallery->category)
-                            <p class="text-sm font-medium">{{ $gallery->category->name }}</p>
-                        @endif
-                    </div>
+        @foreach($galleries->groupBy('category.name') as $categoryName => $items)
+        <h2 class="text-xl font-bold text-secondary mb-4">{{ $categoryName ?? 'Galeri' }}</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-10">
+            @foreach($items as $photo)
+            <div class="overflow-hidden rounded group cursor-pointer"
+                 x-data
+                 @click="$dispatch('open-lightbox', { src: '{{ $photo->image ? Storage::url($photo->image) : asset('images/slider/gallery1.webp') }}', alt: '{{ addslashes($photo->title) }}' })">
+                @if($photo->image)
+                <img src="{{ Storage::url($photo->image) }}" alt="{{ $photo->title }}"
+                     class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                @else
+                <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400 text-sm">
+                    {{ $photo->title }}
                 </div>
+                @endif
             </div>
+            @endforeach
+        </div>
         @endforeach
-    </div>
-
-    <div class="mt-8">
-        {{ $galleries->links() }}
-    </div>
     @else
-    <div class="text-center py-12 text-gray-500">
-        <p>Belum ada foto.</p>
-    </div>
+    <div class="text-center py-16 text-gray-400">Belum ada foto galeri.</div>
     @endif
+</div>
+
+{{-- Lightbox --}}
+<div x-data="{ open: false, src: '', alt: '' }"
+     @open-lightbox.window="open = true; src = $event.detail.src; alt = $event.detail.alt"
+     x-show="open" x-cloak
+     class="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+     @click.self="open = false">
+    <div class="relative max-w-4xl w-full">
+        <button @click="open = false" class="absolute -top-10 right-0 text-white text-2xl">&times;</button>
+        <img :src="src" :alt="alt" class="w-full h-auto rounded shadow-2xl">
+    </div>
 </div>
 @endsection
-
-
-
-
-
-
-
-

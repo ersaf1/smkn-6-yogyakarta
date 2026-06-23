@@ -15,4 +15,13 @@ class ExtracurricularController extends Controller
 
         return view('extracurriculars.index', compact('extracurriculars'));
     }
+
+    public function show($slug)
+    {
+        $extracurricular = Extracurricular::where('slug', $slug)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        return view('extracurriculars.show', compact('extracurricular'));
+    }
 }

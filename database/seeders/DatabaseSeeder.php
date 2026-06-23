@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             StatisticSeeder::class,
             AccordionSeeder::class,
             PageSeeder::class,
+            DummySeeder::class,
         ]);
     }
 }

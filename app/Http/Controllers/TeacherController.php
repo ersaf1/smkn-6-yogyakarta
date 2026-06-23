@@ -15,4 +15,13 @@ class TeacherController extends Controller
 
         return view('teachers.index', compact('teachers'));
     }
+
+    public function show($id)
+    {
+        $teacher = Teacher::where('id', $id)
+            ->where('is_active', true)
+            ->firstOrFail();
+
+        return view('teachers.show', compact('teacher'));
+    }
 }
