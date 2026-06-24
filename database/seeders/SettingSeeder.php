@@ -18,6 +18,7 @@ class SettingSeeder extends Seeder
             ['group' => 'general', 'key' => 'kepala_sekolah_photo', 'value' => 'images/staff/kepala-sekolah.png', 'type' => 'image'],
             ['group' => 'general', 'key' => 'kepala_sekolah_title', 'value' => 'Kepala Sekolah', 'type' => 'text'],
             ['group' => 'general', 'key' => 'sambutan_text', 'value' => 'Dengan memanjatkan puji syukur ke hadirat Tuhan Yang Maha Esa akhirnya kami dapat menyelesaikan revisi website SMK N 6 Yogyakarta. Website ini dapat terselesaikan dengan baik berkat kerjasama dari berbagai pihak terutama Bapak/Ibu Guru SMK Negeri 6 Yogyakarta.', 'type' => 'textarea'],
+            ['group' => 'general', 'key' => 'school_description', 'value' => 'Sekolah Menengah Kejuruan Negeri 6 Yogyakarta atau lebih dikenal dengan nama "Young Entrepreneur School" adalah sekolah unggulan yang berfokus pada industri kreatif dan jasa.', 'type' => 'textarea'],
 
             // Contact
             ['group' => 'contact', 'key' => 'address', 'value' => 'Jl. Kenari No.4, Semaki, Kec. Umbulharjo, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55166', 'type' => 'textarea'],

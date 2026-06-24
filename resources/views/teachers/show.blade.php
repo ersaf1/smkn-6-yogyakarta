@@ -2,14 +2,13 @@
 
 @section('content')
 {{-- Banner --}}
-<div class="relative bg-secondary text-white overflow-hidden">
-    <img src="{{ asset('images/banner.jpg') }}" alt="" class="absolute inset-0 w-full h-full object-cover opacity-30">
-    <div class="relative container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-bold">{{ $teacher->name }}</h1>
+<div class="page-banner">
+    <div class="container mx-auto px-4 py-10 relative">
+        <h1 class="text-2xl font-bold font-['Roboto_Slab']">{{ $teacher->name }}</h1>
         <p class="text-white/70 mt-1 text-sm">
-            <a href="{{ route('home') }}" class="hover:underline">Home</a>
+            <a href="{{ route('home') }}" class="breadcrumb-link">Home</a>
             <span class="mx-1">/</span>
-            <a href="{{ route('teachers.index') }}" class="hover:underline">Guru &amp; Karyawan</a>
+            <a href="{{ route('teachers.index') }}" class="breadcrumb-link">Guru &amp; Karyawan</a>
             <span class="mx-1">/</span>
             {{ $teacher->name }}
         </p>
@@ -18,22 +17,22 @@
 
 <div class="container mx-auto px-4 py-10">
     <div class="max-w-3xl mx-auto">
-        <div class="bg-white rounded shadow-sm overflow-hidden">
+        <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
             <div class="flex flex-col md:flex-row">
                 <div class="flex-shrink-0 p-6 flex justify-center md:justify-start">
                     @if($teacher->photo)
                     <img src="{{ Storage::url($teacher->photo) }}" alt="{{ $teacher->name }}"
-                         class="w-48 h-48 object-cover rounded shadow">
+                         class="w-48 h-48 object-cover rounded-lg shadow">
                     @else
-                    <div class="w-48 h-48 bg-gray-100 rounded flex items-center justify-center">
-                        <svg class="w-20 h-20 text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                    <div class="w-48 h-48 bg-primary/10 rounded-lg flex items-center justify-center">
+                        <svg class="w-20 h-20 text-primary/40" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
                         </svg>
                     </div>
                     @endif
                 </div>
                 <div class="p-6 flex-1">
-                    <h2 class="text-xl font-bold text-secondary mb-4">{{ $teacher->name }}</h2>
+                    <h2 class="text-xl font-bold text-dark mb-4 font-['Roboto_Slab']">{{ $teacher->name }}</h2>
                     <div class="space-y-2 text-sm">
                         @if($teacher->nip)
                         <div class="flex gap-3">
@@ -76,7 +75,7 @@
             </div>
             @if($teacher->bio)
             <div class="px-6 pb-6">
-                <h3 class="font-bold text-secondary mb-3">Biodata</h3>
+                <h3 class="font-bold text-dark mb-3 font-['Roboto_Slab']">Biodata</h3>
                 <div class="prose max-w-none text-gray-700">{!! $teacher->bio !!}</div>
             </div>
             @endif

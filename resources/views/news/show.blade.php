@@ -2,14 +2,13 @@
 
 @section('content')
 {{-- Banner --}}
-<div class="relative bg-secondary text-white overflow-hidden">
-    <img src="{{ asset('images/banner.jpg') }}" alt="" class="absolute inset-0 w-full h-full object-cover opacity-30">
-    <div class="relative container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-bold">Berita</h1>
+<div class="page-banner">
+    <div class="container mx-auto px-4 py-10 relative">
+        <h1 class="text-2xl font-bold font-['Roboto_Slab']">Berita</h1>
         <p class="text-white/70 mt-1 text-sm">
-            <a href="{{ route('home') }}" class="hover:underline">Home</a>
+            <a href="{{ route('home') }}" class="breadcrumb-link">Home</a>
             <span class="mx-1">/</span>
-            <a href="{{ route('news.index') }}" class="hover:underline">Berita</a>
+            <a href="{{ route('news.index') }}" class="breadcrumb-link">Berita</a>
             <span class="mx-1">/</span>
             {{ Str::limit($news->title, 40) }}
         </p>
@@ -20,11 +19,16 @@
     <div class="max-w-3xl mx-auto">
         @if($news->featured_image)
         <img src="{{ Storage::url($news->featured_image) }}" alt="{{ $news->title }}"
-             class="w-full rounded mb-8 shadow">
+             class="w-full rounded-lg mb-8 shadow">
         @endif
-        <h1 class="text-3xl font-bold text-secondary mb-3 leading-tight">{{ $news->title }}</h1>
+        <h1 class="text-3xl font-bold text-dark mb-3 leading-tight font-['Roboto_Slab']">{{ $news->title }}</h1>
         <div class="flex items-center gap-4 text-sm text-gray-400 mb-8">
-            <span>{{ $news->published_at?->format('d M Y') ?? $news->created_at->format('d M Y') }}</span>
+            <span class="flex items-center gap-1">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                {{ $news->published_at?->format('d M Y') ?? $news->created_at->format('d M Y') }}
+            </span>
             @if($news->category)
             <span class="bg-primary/10 text-primary px-3 py-0.5 rounded-full">{{ $news->category->name }}</span>
             @endif

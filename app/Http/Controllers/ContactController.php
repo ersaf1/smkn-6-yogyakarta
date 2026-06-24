@@ -10,7 +10,7 @@ class ContactController extends Controller
 {
     public function index()
     {
-        $address = Setting::get('address', 'Jl. Kenari no 4 (Selatan Stadion Mandala Krida), Yogyakarta');
+        $address = Setting::get('address', 'Jl. Kenari No.4, Semaki, Kec. Umbulharjo, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55166');
         $phone = Setting::get('phone', '0274 512251');
         $email = Setting::get('email', 'smkn6yk@gmail.com');
         $email2 = Setting::get('email_secondary', 'mail@smkn6yk.sch.id');

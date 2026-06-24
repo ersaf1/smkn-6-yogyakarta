@@ -31,11 +31,12 @@ class HomepageController extends Controller
         $kepalaSekolahName = Setting::get('kepala_sekolah_name', 'Mujari, S.Pd, M.Pd');
         $kepalaSekolahPhoto = Setting::get('kepala_sekolah_photo', '');
         $sambutanText = Setting::get('sambutan_text', '');
+        $siteName = Setting::get('site_name', 'SMK Negeri 6 Yogyakarta');
 
         return view('homepage', compact(
             'sliders', 'accordions', 'competencies', 'statistics',
             'news', 'partners', 'videos', 'kepalaSekolahName', 'kepalaSekolahPhoto',
-            'sambutanText'
+            'sambutanText', 'siteName'
         ));
     }
 }

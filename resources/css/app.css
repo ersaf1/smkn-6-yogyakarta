@@ -7,27 +7,62 @@
 @source "../**/*.vue";
 
 @theme {
-    --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
-    --color-primary: #D89216;
-    --color-primary-dark: #B87A10;
-    --color-secondary: #1E2D4D;
-    --color-accent: #D89216;
-    --color-dark: #151515;
-    --color-text: #3A4F66;
-    --color-light: #e1e8ed;
-    --color-lighter: #F4F5F7;
-    --color-lightest: #FAFBFC;
+    --color-primary: #f1b31c;
+    --color-primary-dark: #d49a0f;
+    --color-secondary: #003366;
+    --color-accent: #f1b31c;
+    --color-dark: #1a1a1a;
+    --color-nav-yellow: #f1b31c;
+    --color-footer-dark: #1a1a1a;
+    --color-blue: #003366;
+    --color-blue-900: #003366;
+    --color-text: #333333;
 }
 
 @layer base {
     body {
-        font-family: 'Poppins', sans-serif;
-        background-color: #F4F5F7;
+        font-family: 'Inter', sans-serif;
+        background-color: #ffffff;
+        color: #374151;
     }
     h1, h2, h3, h4, h5, h6 {
         font-weight: 700;
-        color: #1E2D4D;
+        color: #003366;
+        font-family: 'Inter', sans-serif;
+    }
+    ::selection {
+        background-color: #f1b31c;
+        color: #ffffff;
+    }
+}
+
+@layer components {
+    .page-banner {
+        @apply bg-secondary text-white relative overflow-hidden;
+    }
+    .page-banner::before {
+        content: '';
+        @apply absolute inset-0 opacity-10;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .breadcrumb-link {
+        @apply text-white/70 hover:text-primary transition-colors;
+    }
+    .card-hover {
+        @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+    }
+    .section-title {
+        @apply text-3xl font-bold text-center text-secondary mb-12 uppercase tracking-widest;
+    }
+    .hero-gradient {
+        background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
+    }
+    .stat-bg {
+        background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
+        background-size: cover;
+        background-position: center;
     }
 }
 
@@ -44,8 +79,10 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
-    /* Smooth accordion flex transition */
-    .accordion-panel {
-        transition: flex 0.5s ease;
+    .line-clamp-4 {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 }

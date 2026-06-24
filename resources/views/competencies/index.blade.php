@@ -2,12 +2,11 @@
 
 @section('content')
 {{-- Banner --}}
-<div class="relative bg-secondary text-white overflow-hidden">
-    <img src="{{ asset('images/banner.jpg') }}" alt="" class="absolute inset-0 w-full h-full object-cover opacity-30">
-    <div class="relative container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-bold">Kompetensi Keahlian</h1>
+<div class="page-banner">
+    <div class="container mx-auto px-4 py-10 relative">
+        <h1 class="text-2xl font-bold font-['Roboto_Slab']">Kompetensi Keahlian</h1>
         <p class="text-white/70 mt-1 text-sm">
-            <a href="{{ route('home') }}" class="hover:underline">Home</a>
+            <a href="{{ route('home') }}" class="breadcrumb-link">Home</a>
             <span class="mx-1">/</span>
             Kompetensi Keahlian
         </p>
@@ -19,15 +18,15 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @foreach($competencies as $competency)
         <a href="{{ route('competencies.show', $competency->slug) }}"
-           class="bg-white rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow group block">
+           class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow group block border border-gray-100">
             @if($competency->image)
             <div class="overflow-hidden">
                 <img src="{{ Storage::url($competency->image) }}" alt="{{ $competency->name }}"
                      class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
             </div>
             @else
-            <div class="w-full h-48 bg-secondary/10 flex items-center justify-center">
-                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+            <div class="w-full h-48 bg-primary/10 flex items-center justify-center">
+                <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center">
                     @if($competency->icon)
                     <img src="{{ Storage::url($competency->icon) }}" alt="" class="w-10 h-10 object-contain">
                     @else
@@ -39,7 +38,7 @@
             </div>
             @endif
             <div class="p-5">
-                <h3 class="font-bold text-gray-800 group-hover:text-primary transition-colors">{{ $competency->name }}</h3>
+                <h3 class="font-bold text-gray-800 group-hover:text-primary transition-colors font-['Roboto_Slab']">{{ $competency->name }}</h3>
                 @if($competency->description)
                 <p class="text-gray-500 text-sm mt-2 line-clamp-2">{{ $competency->description }}</p>
                 @endif

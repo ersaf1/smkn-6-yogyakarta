@@ -2,21 +2,22 @@
 
 @section('content')
 {{-- Banner --}}
-<div class="relative bg-secondary text-white overflow-hidden">
-    <img src="{{ asset('images/banner.jpg') }}" alt="" class="absolute inset-0 w-full h-full object-cover opacity-30">
-    <div class="relative container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-bold">Donwload</h1>
+<div class="relative h-64 md:h-80 flex items-center justify-center text-white"
+    style="background-image: url('{{ Storage::url('images/banner.jpg') }}'); background-size: cover; background-position: center;">
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="relative z-10 container mx-auto px-4 py-10">
+        <h1 class="text-2xl font-bold font-['Roboto_Slab']">Download</h1>
         <p class="text-white/70 mt-1 text-sm">
-            <a href="{{ route('home') }}" class="hover:underline">Home</a>
+            <a href="{{ route('home') }}" class="breadcrumb-link">Home</a>
             <span class="mx-1">/</span>
-            Donwload
+            Download
         </p>
     </div>
 </div>
 
 <div class="container mx-auto px-4 py-10">
     @if($downloads->count() > 0)
-    <div class="bg-white rounded shadow-sm overflow-hidden">
+    <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
         <div class="divide-y divide-gray-100">
             @foreach($downloads as $download)
             <div class="flex items-center justify-between p-5 hover:bg-gray-50 transition-colors">
@@ -27,7 +28,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="font-semibold text-gray-800 text-sm">{{ $download->title }}</h3>
+                        <h3 class="font-semibold text-gray-800 text-sm font-['Roboto_Slab']">{{ $download->title }}</h3>
                         @if($download->description)
                         <p class="text-xs text-gray-500 mt-0.5">{{ $download->description }}</p>
                         @endif

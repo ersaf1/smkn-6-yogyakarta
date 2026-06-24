@@ -2,14 +2,13 @@
 
 @section('content')
 {{-- Banner --}}
-<div class="relative bg-secondary text-white overflow-hidden">
-    <img src="{{ asset('images/banner.jpg') }}" alt="" class="absolute inset-0 w-full h-full object-cover opacity-30">
-    <div class="relative container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-bold">{{ $extracurricular->name }}</h1>
+<div class="page-banner">
+    <div class="container mx-auto px-4 py-10 relative">
+        <h1 class="text-2xl font-bold font-['Roboto_Slab']">{{ $extracurricular->name }}</h1>
         <p class="text-white/70 mt-1 text-sm">
-            <a href="{{ route('home') }}" class="hover:underline">Home</a>
+            <a href="{{ route('home') }}" class="breadcrumb-link">Home</a>
             <span class="mx-1">/</span>
-            <a href="{{ route('extracurriculars.index') }}" class="hover:underline">Ekstrakulikuler</a>
+            <a href="{{ route('extracurriculars.index') }}" class="breadcrumb-link">Ekstrakulikuler</a>
             <span class="mx-1">/</span>
             {{ $extracurricular->name }}
         </p>
@@ -20,7 +19,7 @@
     <div class="max-w-4xl mx-auto">
         @if($extracurricular->image)
         <img src="{{ Storage::url($extracurricular->image) }}" alt="{{ $extracurricular->name }}"
-             class="w-full rounded shadow mb-8 max-h-96 object-cover">
+             class="w-full rounded-lg shadow mb-8 max-h-96 object-cover">
         @endif
         <div class="flex flex-wrap gap-6 mb-6">
             @if($extracurricular->coach)

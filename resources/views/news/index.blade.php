@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- Page Banner (sama seperti live site - bg secondary + breadcrumb) --}}
-<div class="bg-secondary text-white">
-    <div class="container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-bold">Berita</h1>
+{{-- Page Banner --}}
+<div class="page-banner">
+    <div class="container mx-auto px-4 py-10 relative">
+        <h1 class="text-2xl font-bold font-['Roboto_Slab']">Berita</h1>
         <p class="text-white/70 mt-1 text-sm">
-            <a href="{{ route('home') }}" class="hover:underline">Home</a>
+            <a href="{{ route('home') }}" class="breadcrumb-link">Home</a>
             <span class="mx-1">/</span>
             Berita
         </p>
@@ -34,7 +34,7 @@
     @if($news->count() > 0)
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @foreach($news as $item)
-        <article class="bg-white rounded overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
+        <article class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow group border border-gray-100">
             @if($item->featured_image)
             <a href="{{ route('news.show', $item->slug) }}" class="block overflow-hidden">
                 <img src="{{ Storage::url($item->featured_image) }}" alt="{{ $item->title }}"
@@ -42,18 +42,21 @@
             </a>
             @endif
             <div class="p-5">
-                <h2 class="font-bold text-gray-800 mb-2 leading-snug line-clamp-2">
+                <h2 class="font-bold text-gray-800 mb-2 leading-snug line-clamp-2 font-['Roboto_Slab']">
                     <a href="{{ route('news.show', $item->slug) }}" class="hover:text-primary transition-colors">
                         {{ $item->title }}
                     </a>
                 </h2>
-                <p class="text-xs text-gray-400 mb-3">
+                <p class="text-xs text-gray-400 mb-3 flex items-center gap-1">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
                     {{ $item->published_at?->format('M j, Y') ?? $item->created_at->format('M j, Y') }}
                 </p>
                 <p class="text-gray-600 text-sm line-clamp-3 mb-4 leading-relaxed">
                     {{ $item->excerpt ?? Str::limit(strip_tags($item->content), 180) }}
                 </p>
-                <a href="{{ route('news.show', $item->slug) }}" class="text-primary font-semibold text-sm hover:underline">
+                <a href="{{ route('news.show', $item->slug) }}" class="inline-block border-2 border-primary text-primary px-6 py-2 rounded font-semibold hover:bg-primary hover:text-white transition-colors text-sm">
                     Baca Berita
                 </a>
             </div>

@@ -30,23 +30,48 @@ class SettingResource extends Resource
                     'social' => 'Media Sosial',
                     'seo' => 'SEO',
                 ])
-                ->required(),
-            Forms\Components\TextInput::make('key')
                 ->required()
-                ->maxLength(255),
-            Forms\Components\Textarea::make('value')
-                ->rows(3),
+                ->columnSpan(1),
             Forms\Components\Select::make('type')
                 ->options([
-                    'text' => 'Text',
+                    'text'     => 'Text',
                     'textarea' => 'Textarea',
-                    'image' => 'Image',
-                    'url' => 'URL',
-                    'email' => 'Email',
-                    'phone' => 'Phone',
+                    'image'    => 'Image',
+                    'url'      => 'URL',
+                    'email'    => 'Email',
+                    'phone'    => 'Phone',
                 ])
-                ->required(),
-        ]);
+                ->required()
+                ->live()
+                ->columnSpan(1),
+            Forms\Components\TextInput::make('key')
+                ->required()
+                ->maxLength(255)
+                ->columnSpanFull(),
+
+            // Nilai teks biasa
+            Forms\Components\TextInput::make('value')
+                ->label('Nilai')
+                ->maxLength(500)
+                ->columnSpanFull()
+                ->visible(fn ($get) => in_array($get('type'), ['text', 'url', 'email', 'phone'])),
+
+            // Nilai textarea
+            Forms\Components\Textarea::make('value')
+                ->label('Nilai')
+                ->rows(4)
+                ->columnSpanFull()
+                ->visible(fn ($get) => $get('type') === 'textarea'),
+
+            // Nilai image - file upload
+            Forms\Components\FileUpload::make('value')
+                ->label('Gambar')
+                ->image()
+                ->directory('settings')
+                ->previewable(true)
+                ->columnSpanFull()
+                ->visible(fn ($get) => $get('type') === 'image'),
+        ])->columns(2);
     }
 
     public static function table(Table $table): Table

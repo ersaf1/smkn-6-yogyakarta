@@ -2,12 +2,13 @@
 
 @section('content')
 {{-- Banner --}}
-<div class="relative bg-secondary text-white overflow-hidden">
-    <img src="{{ asset('images/banner.jpg') }}" alt="" class="absolute inset-0 w-full h-full object-cover opacity-30">
-    <div class="relative container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-bold">Hubungi Kami</h1>
+<div class="relative h-64 md:h-80 flex items-center justify-center text-white"
+    style="background-image: url('{{ Storage::url('images/banner.jpg') }}'); background-size: cover; background-position: center;">
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="relative z-10 container mx-auto px-4 py-10">
+        <h1 class="text-2xl font-bold font-['Roboto_Slab']">Hubungi Kami</h1>
         <p class="text-white/70 mt-1 text-sm">
-            <a href="{{ route('home') }}" class="hover:underline">Home</a>
+            <a href="{{ route('home') }}" class="breadcrumb-link">Home</a>
             <span class="mx-1">/</span>
             Hubungi Kami
         </p>
@@ -16,7 +17,7 @@
 
 <div class="container mx-auto px-4 py-10">
     {{-- Google Maps --}}
-    <div class="mb-10 rounded overflow-hidden shadow">
+    <div class="mb-10 rounded-lg overflow-hidden shadow">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.3!2d110.3786!3d-7.7956!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a59b0e8bca5cb%3A0xd15450df6a6b8b0!2sSMK%20Negeri%206%20Yogyakarta!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
                 width="100%" height="400" style="border:0;" allowfullscreen loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -25,7 +26,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
         {{-- Info Kontak --}}
         <div>
-            <h2 class="text-2xl font-bold text-secondary mb-6">Informasi Kontak</h2>
+            <h2 class="text-2xl font-bold text-dark mb-6 font-['Roboto_Slab']">Informasi Kontak</h2>
             <div class="space-y-5">
                 <div class="flex items-start gap-4">
                     <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
@@ -80,7 +81,7 @@
 
         {{-- Form --}}
         <div>
-            <h2 class="text-2xl font-bold text-secondary mb-6">Kirim Pesan</h2>
+            <h2 class="text-2xl font-bold text-dark mb-6 font-['Roboto_Slab']">Kirim Pesan</h2>
             @if(session('success'))
             <div class="bg-green-50 border border-green-300 text-green-700 px-4 py-3 rounded mb-5 text-sm">
                 {{ session('success') }}
