@@ -18,7 +18,10 @@ class CompetencySeeder extends Seeder
         ];
 
         foreach ($competencies as $competency) {
-            Competency::create($competency);
+            Competency::firstOrCreate(
+                ['name' => $competency['name']],
+                $competency
+            );
         }
     }
 }

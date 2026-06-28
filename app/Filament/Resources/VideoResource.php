@@ -36,13 +36,16 @@ class VideoResource extends Resource
                         ->unique(ignoreRecord: true),
                     Forms\Components\Textarea::make('description')
                         ->rows(3),
-                    Forms\Components\TextInput::make('video_url')
+                    Forms\Components\FileUpload::make('video_file')
+                        ->label('Video File')
+                        ->acceptedFileTypes(['video/mp4', 'video/webm', 'video/ogg'])
+                        ->maxSize(51200)
+                        ->directory('videos')
                         ->required()
-                        ->url()
-                        ->maxLength(255),
+                        ->previewable(true),
                     Forms\Components\FileUpload::make('thumbnail')
                         ->image()
-                        ->directory('videos')
+                        ->directory('videos/thumbnails')
                         ->previewable(true),
                     Forms\Components\TextInput::make('order')
                         ->numeric()
@@ -61,7 +64,8 @@ class VideoResource extends Resource
                     ->circular(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('video_url')
+                Tables\Columns\TextColumn::make('video_file')
+                    ->label('Video')
                     ->limit(30),
                 Tables\Columns\TextColumn::make('order')
                     ->sortable(),

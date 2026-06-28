@@ -11,7 +11,7 @@ class TeacherController extends Controller
     {
         $teachers = Teacher::where('is_active', true)
             ->orderBy('order')
-            ->get();
+            ->paginate(20);
 
         return view('teachers.index', compact('teachers'));
     }

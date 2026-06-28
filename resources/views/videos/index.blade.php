@@ -20,10 +20,14 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @foreach($videos as $video)
         <div class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100">
-            <div class="relative" style="padding-bottom:56.25%">
-                <iframe src="{{ $video->embed_url }}" class="absolute inset-0 w-full h-full"
-                        frameborder="0" allowfullscreen loading="lazy"></iframe>
+            @if($video->video_file)
+            <div class="relative bg-black" style="padding-bottom:56.25%">
+                <video class="absolute inset-0 w-full h-full object-cover" controls preload="metadata" playsinline
+                       @if($video->thumbnail) poster="{{ Storage::url($video->thumbnail) }}" @endif>
+                    <source src="{{ $video->video_url }}" type="video/mp4">
+                </video>
             </div>
+            @endif
             <div class="p-4">
                 <h3 class="font-semibold text-gray-800 text-sm font-['Roboto_Slab']">{{ $video->title }}</h3>
                 @if($video->description)

@@ -16,7 +16,10 @@ class StatisticSeeder extends Seeder
         ];
 
         foreach ($statistics as $statistic) {
-            Statistic::create($statistic);
+            Statistic::firstOrCreate(
+                ['label' => $statistic['label']],
+                $statistic
+            );
         }
     }
 }

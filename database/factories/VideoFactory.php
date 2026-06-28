@@ -18,7 +18,7 @@ class VideoFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title),
             'description' => fake()->paragraph(),
-            'video_url' => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            'video_file' => 'videos/sample.mp4',
             'thumbnail' => null,
             'order' => fake()->numberBetween(0, 30),
             'is_active' => true,

@@ -17,7 +17,7 @@
 
 <div class="container mx-auto px-4 py-10">
     @if($galleries->count() > 0)
-        @foreach($galleries->groupBy('category.name') as $categoryName => $items)
+        @foreach($galleries->groupBy(function ($item) { return $item->category->name ?? 'Umum'; }) as $categoryName => $items)
         <h2 class="text-xl font-bold text-dark mb-4 font-['Roboto_Slab']">{{ $categoryName ?? 'Galeri' }}</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-10">
             @foreach($items as $photo)

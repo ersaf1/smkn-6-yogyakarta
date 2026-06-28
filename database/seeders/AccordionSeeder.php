@@ -17,7 +17,10 @@ class AccordionSeeder extends Seeder
         ];
 
         foreach ($accordions as $accordion) {
-            Accordion::create($accordion);
+            Accordion::firstOrCreate(
+                ['title' => $accordion['title']],
+                $accordion
+            );
         }
     }
 }

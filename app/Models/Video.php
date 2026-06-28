@@ -12,7 +12,7 @@ class Video extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'title', 'slug', 'description', 'video_url',
+        'title', 'slug', 'description', 'video_file',
         'thumbnail', 'order', 'is_active'
     ];
 
@@ -28,17 +28,8 @@ class Video extends Model
         }
     }
 
-    public function getEmbedUrlAttribute()
+    public function getVideoUrlAttribute()
     {
-        $url = $this->video_url;
-        if (str_contains($url, 'youtube.com/watch')) {
-            parse_str(parse_url($url, PHP_URL_QUERY), $params);
-            return 'https://www.youtube.com/embed/' . ($params['v'] ?? '');
-        }
-        if (str_contains($url, 'youtu.be/')) {
-            $id = str_replace('youtu.be/', '', parse_url($url, PHP_URL_PATH));
-            return 'https://www.youtube.com/embed/' . $id;
-        }
-        return $url;
+        return $this->video_file ? asset('storage/' . $this->video_file) : null;
     }
 }

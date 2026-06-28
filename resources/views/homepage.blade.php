@@ -52,72 +52,130 @@
 @endif
 
 {{-- ===================== WELCOME + PROGRAM KEAHLIAN ===================== --}}
-<main class="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
-    {{-- Principal Profile --}}
-    <section class="lg:col-span-5 flex flex-col items-center lg:items-start">
-        <div class="relative w-full max-w-sm">
-            @if($kepalaSekolahPhoto)
-                <img src="{{ Storage::url($kepalaSekolahPhoto) }}" alt="{{ $kepalaSekolahName }}"
-                     class="w-full rounded-lg shadow-xl">
-            @else
-                <div class="w-full aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center">
-                    <svg class="w-24 h-24 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-                    </svg>
-                </div>
-            @endif
-            <div class="bg-primary text-white p-4 text-center relative z-10 -mt-5 rounded shadow-md mx-4">
-                <h3 class="font-bold text-lg">{{ $kepalaSekolahName }}</h3>
-                <p class="text-sm">(Kepala Sekolah)</p>
-            </div>
-        </div>
-        <div class="mt-8 relative pl-10">
-            <span class="absolute left-0 top-0 text-gray-300 text-6xl font-serif">&ldquo;</span>
-            <h4 class="text-xl font-bold text-secondary mb-2">Assalamualaikum Wr. Wb</h4>
-            @if($sambutanText)
-                <p class="text-gray-600 leading-relaxed italic">{!! Str::limit(strip_tags($sambutanText), 300) !!}</p>
-            @else
-                <p class="text-gray-600 leading-relaxed italic">Kami mengucapkan selamat datang di website kami, Sekolah Menengah Kejuruan Negeri SMKN 6 Yogyakarta.</p>
-            @endif
-        </div>
-    </section>
+@php
+    $fallbackImages = [
+        'usaha-perjalanan-wisata' => 'assets/program-keahlian/usaha-perjalanan-wisata.webp',
+        'perhotelan' => 'assets/program-keahlian/perhotelan.webp',
+        'kuliner' => 'assets/program-keahlian/kuliner.webp',
+        'tata-kecantikan-rambut-kulit' => 'assets/program-keahlian/kecantikan-spa.webp',
+        'kecantikan' => 'assets/program-keahlian/kecantikan-spa.webp',
+        'spa' => 'assets/program-keahlian/kecantikan-spa.webp',
+        'tata-busana' => 'assets/program-keahlian/tata-busana.webp',
+    ];
+    $defaultFallback = 'assets/program-keahlian/kuliner.webp';
 
-    {{-- Program Keahlian Grid --}}
-    @if($competencies->count() > 0)
-    <section class="lg:col-span-7">
-        <h2 class="text-3xl font-bold text-secondary mb-8 border-l-4 border-primary pl-4">Program Keahlian</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            @foreach($competencies as $competency)
-            <a href="{{ route('competencies.show', $competency->slug) }}"
-               class="relative group overflow-hidden rounded-lg shadow-md aspect-square">
-                @if($competency->icon)
-                    <img src="{{ Storage::url($competency->icon) }}" alt="{{ $competency->name }}"
-                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                @else
-                    <div class="w-full h-full bg-primary/10 flex items-center justify-center">
-                        <span class="text-primary font-bold text-lg text-center px-2">{{ $competency->name }}</span>
+    function getCompetencyImage($competency, $fallbackImages, $defaultFallback) {
+        if ($competency->image) {
+            return Storage::url($competency->image);
+        }
+        if ($competency->icon) {
+            return Storage::url($competency->icon);
+        }
+        $slug = $competency->slug;
+        if (isset($fallbackImages[$slug])) {
+            return '/' . $fallbackImages[$slug];
+        }
+        foreach ($fallbackImages as $key => $path) {
+            if (Str::contains($slug, $key)) {
+                return '/' . $path;
+            }
+        }
+        return '/' . $defaultFallback;
+    }
+@endphp
+
+<section class="bg-white" style="padding-top: 80px; padding-bottom: 80px;">
+    <div class="mx-auto px-4 sm:px-6 lg:px-8" style="max-width: 1280px;">
+        <div class="flex flex-col lg:flex-row items-start" style="gap: 48px;">
+
+            {{-- Kolom Kiri: Foto + Sambutan --}}
+            <div class="w-full lg:w-auto flex-shrink-0">
+                {{-- Foto Kepala Sekolah --}}
+                <div class="relative" style="width: 360px; height: 470px;">
+                    @if($kepalaSekolahPhoto)
+                        <img src="{{ Storage::url($kepalaSekolahPhoto) }}" alt="{{ $kepalaSekolahName }}"
+                             class="w-full h-full object-cover">
+                    @else
+                        <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                            <svg class="w-20 h-20 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                            </svg>
+                        </div>
+                    @endif
+                    {{-- Overlay Nama --}}
+                    <div class="absolute bottom-0 left-0 right-0 bg-[#ef9800] text-white text-center" style="height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <span style="font-size: 17px; font-weight: 700; line-height: 1.3;">{{ $kepalaSekolahName }}</span>
+                        <span style="font-size: 12px; font-weight: 600; line-height: 1.3;">(Kepala Sekolah)</span>
                     </div>
-                @endif
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <span class="text-white font-bold text-sm">{{ $competency->name }}</span>
                 </div>
-            </a>
-            @endforeach
-        </div>
-    </section>
-    @endif
-</main>
 
-{{-- ===================== VIDEO ===================== --}}
+                {{-- Sambutan --}}
+                <div style="margin-top: 18px; display: flex; gap: 12px; align-items: flex-start;">
+                    {{-- Quote Icon --}}
+                    <div style="flex-shrink: 0; margin-right: 12px; margin-top: -2px;">
+                        <span style="font-size: 44px; font-weight: bold; line-height: 1; color: #6B7280; font-family: Georgia, 'Times New Roman', serif;">&ldquo;</span>
+                    </div>
+                    {{-- Text --}}
+                    <div>
+                        <h4 style="font-size: 18px; font-weight: 700; color: #1F2937; line-height: 1.25; margin-bottom: 6px;">Assalamualaikum Wr. Wb</h4>
+                        @if($sambutanText)
+                            <p style="font-size: 16px; line-height: 1.7; color: #374151; max-width: 260px;">{!! Str::limit(strip_tags($sambutanText), 300) !!}</p>
+                        @else
+                            <p style="font-size: 16px; line-height: 1.7; color: #374151; max-width: 260px;">Kami mengucapkan selamat datang di website kami, Sekolah Menengah Kejuruan Negeri SMKN 6 Yogyakarta.</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            {{-- Kolom Kanan: Program Keahlian --}}
+            @if($competencies->count() > 0)
+            <div class="w-full flex-1 min-w-0">
+                <h2 class="font-extrabold text-[#173F8A] leading-tight" style="font-size: 48px;">Program Keahlian</h2>
+
+                {{-- Flexbox Accordion Rows --}}
+                @php $rows = $competencies->chunk(3); @endphp
+                @foreach($rows as $row)
+                <div class="program-row">
+                    @foreach($row as $competency)
+                    @php $imgSrc = getCompetencyImage($competency, $fallbackImages, $defaultFallback); @endphp
+                    <a href="{{ route('competencies.show', $competency->slug) }}" class="program-item">
+                        <img src="{{ $imgSrc }}" alt="{{ $competency->name }}" class="program-item-img" loading="lazy">
+                        <div class="program-item-overlay"></div>
+                        <div class="program-item-diagonal"></div>
+                        <div class="program-item-diagonal-gold"></div>
+                        <div class="program-item-content">
+                            <span class="program-item-name">{{ $competency->name }}</span>
+                        </div>
+                        <div class="program-item-strip">
+                            <span>{{ strtoupper($competency->name) }}</span>
+                        </div>
+                    </a>
+                    @endforeach
+                </div>
+                @endforeach
+            </div>
+            @endif
+
+        </div>
+    </div>
+</section>
+
+{{-- ===================== VIDEO (Jurusan) ===================== --}}
 @if($videos->count() > 0)
 <section class="bg-zinc-100 py-12">
     <div class="max-w-7xl mx-auto px-4">
         <h2 class="text-3xl font-bold text-center text-secondary mb-10 uppercase tracking-widest">Video</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-{{ min($videos->count(), 5) }} gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));">
             @foreach($videos as $video)
             <div class="bg-black aspect-[9/16] rounded shadow overflow-hidden">
-                <iframe src="{{ $video->embed_url }}" class="w-full h-full"
-                        frameborder="0" allowfullscreen loading="lazy"></iframe>
+                @if($video->video_file)
+                <video class="w-full h-full object-cover" controls preload="metadata" playsinline
+                       @if($video->thumbnail) poster="{{ Storage::url($video->thumbnail) }}" @endif>
+                    <source src="{{ $video->video_url }}" type="video/mp4">
+                </video>
+                @else
+                <div class="w-full h-full flex items-center justify-center text-gray-500 text-sm">Belum ada video</div>
+                @endif
             </div>
             @endforeach
         </div>
@@ -152,7 +210,7 @@
     x-intersect="start()">
     <div class="max-w-7xl mx-auto px-4">
         <h2 class="text-4xl font-extrabold text-center mb-16 tracking-wide">Data Statistik</h2>
-        <div class="grid grid-cols-1 md:grid-cols-{{ min($statistics->count(), 3) }} gap-12 text-center">
+        <div class="grid grid-cols-1 gap-12 text-center" style="grid-template-columns: repeat({{ min($statistics->count(), 3) }}, minmax(0, 1fr));">
             @foreach($statistics as $i => $stat)
             <div class="flex flex-col items-center {{ $i > 0 ? 'md:border-l md:border-white/20' : '' }}">
                 <div class="bg-primary p-4 rounded-full mb-4">
@@ -219,29 +277,77 @@
 <section class="py-16 bg-white overflow-hidden">
     <div class="max-w-7xl mx-auto px-4">
         <h2 class="section-title">Mitra Kerja</h2>
-        <div class="flex flex-wrap justify-center items-center gap-16 opacity-90">
-            @foreach($partners as $partner)
-            <div class="p-2">
-                @if($partner->url)
-                <a href="{{ $partner->url }}" target="_blank" rel="noopener">
-                    @if($partner->logo)
-                    <img src="{{ Storage::url($partner->logo) }}" alt="{{ $partner->name }}"
-                         class="h-20 w-auto grayscale hover:grayscale-0 transition duration-300">
-                    @else
-                    <span class="text-gray-500 text-base font-medium">{{ $partner->name }}</span>
-                    @endif
-                </a>
-                @else
-                @if($partner->logo)
-                <img src="{{ Storage::url($partner->logo) }}" alt="{{ $partner->name }}"
-                     class="h-20 w-auto grayscale hover:grayscale-0 transition duration-300">
-                @else
-                <span class="text-gray-500 text-base font-medium">{{ $partner->name }}</span>
-                @endif
-                @endif
+        <div x-data="{
+            current: 0,
+            total: {{ $partners->count() }},
+            perPage: 5,
+            get pages() { return Math.ceil(this.total / this.perPage); },
+            get maxPage() { return this.pages - 1; },
+            next() { this.current = this.current < this.maxPage ? this.current + 1 : 0; },
+            goTo(page) { this.current = page; }
+        }" class="relative">
+            <div class="overflow-hidden">
+                <div class="flex transition-transform duration-500 ease-in-out"
+                     :style="'transform: translateX(-' + (current * 100) + '%)'">
+                    @php $chunks = $partners->chunk(5); @endphp
+                    @foreach($chunks as $chunk)
+                    <div class="w-full flex-shrink-0 flex justify-center items-center gap-10 opacity-90">
+                        @foreach($chunk as $partner)
+                        <div class="p-2 flex-shrink-0">
+                            @if($partner->url)
+                            <a href="{{ $partner->url }}" target="_blank" rel="noopener">
+                                @if($partner->logo)
+                                <img src="{{ Storage::url($partner->logo) }}" alt="{{ $partner->name }}"
+                                     class="h-16 w-auto grayscale hover:grayscale-0 transition duration-300">
+                                @else
+                                <span class="text-gray-500 text-base font-medium">{{ $partner->name }}</span>
+                                @endif
+                            </a>
+                            @else
+                            @if($partner->logo)
+                            <img src="{{ Storage::url($partner->logo) }}" alt="{{ $partner->name }}"
+                                 class="h-16 w-auto grayscale hover:grayscale-0 transition duration-300">
+                            @else
+                            <span class="text-gray-500 text-base font-medium">{{ $partner->name }}</span>
+                            @endif
+                            @endif
+                        </div>
+                        @endforeach
+                    </div>
+                    @endforeach
+                </div>
             </div>
-            @endforeach
+            {{-- Dots --}}
+            <div class="flex justify-center gap-2 mt-8">
+                <template x-for="page in pages" :key="page">
+                    <button @click="goTo(page - 1)"
+                            class="w-3 h-3 rounded-full transition-colors duration-300"
+                            :class="current === (page - 1) ? 'bg-[#213F99]' : 'bg-gray-300 hover:bg-gray-400'"
+                            :aria-label="'Slide ' + page">
+                    </button>
+                </template>
+            </div>
         </div>
+    </div>
+</section>
+@endif
+
+{{-- ===================== VIDEO BANNER ===================== --}}
+@if($videos->count() > 0)
+<section class="w-full bg-black">
+    <div class="flex overflow-x-auto" style="scrollbar-width: none; -ms-overflow-style: none;">
+        @foreach($videos as $video)
+        <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+            @if($video->video_file)
+            <video class="w-full h-full object-cover" controls preload="metadata" playsinline
+                   @if($video->thumbnail) poster="{{ Storage::url($video->thumbnail) }}" @endif>
+                <source src="{{ $video->video_url }}" type="video/mp4">
+            </video>
+            @else
+            <div class="w-full h-full flex items-center justify-center text-gray-500 text-sm bg-zinc-900">Belum ada video</div>
+            @endif
+        </div>
+        @endforeach
     </div>
 </section>
 @endif

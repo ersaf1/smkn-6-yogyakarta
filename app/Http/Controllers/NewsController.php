@@ -18,6 +18,14 @@ class NewsController extends Controller
             });
         }
 
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('content', 'like', "%{$search}%");
+            });
+        }
+
         $news = $query->orderBy('published_at', 'desc')->paginate(9);
         $categories = NewsCategory::where('is_active', true)->orderBy('order')->get();
 

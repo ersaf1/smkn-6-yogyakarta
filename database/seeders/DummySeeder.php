@@ -18,7 +18,6 @@ use App\Models\Slider;
 use App\Models\Statistic;
 use App\Models\Teacher;
 use App\Models\User;
-use App\Models\Video;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -34,7 +33,6 @@ class DummySeeder extends Seeder
         $this->createTeachers();
         $this->createGalleryCategories();
         $this->createGalleries();
-        $this->createVideos();
         $this->createAchievements();
         $this->createExtracurriculars();
         $this->createDownloads();
@@ -47,17 +45,21 @@ class DummySeeder extends Seeder
 
     private function createUsers(): void
     {
-        User::factory()->create([
-            'name' => 'Operator Sekolah',
-            'email' => 'operator@smkn6yk.sch.id',
-            'password' => Hash::make('password'),
-        ]);
+        User::firstOrCreate(
+            ['email' => 'operator@smkn6yk.sch.id'],
+            [
+                'name' => 'Operator Sekolah',
+                'password' => Hash::make('password'),
+            ]
+        );
 
-        User::factory()->create([
-            'name' => 'Kepala Sekolah',
-            'email' => 'kepsek@smkn6yk.sch.id',
-            'password' => Hash::make('password'),
-        ]);
+        User::firstOrCreate(
+            ['email' => 'kepsek@smkn6yk.sch.id'],
+            [
+                'name' => 'Kepala Sekolah',
+                'password' => Hash::make('password'),
+            ]
+        );
 
         User::factory()->count(5)->create();
     }
@@ -315,24 +317,6 @@ class DummySeeder extends Seeder
         }
 
         Gallery::factory()->count(15)->create();
-    }
-
-    private function createVideos(): void
-    {
-        $videos = [
-            ['title' => 'Profil SMK Negeri 6 Yogyakarta', 'description' => 'Video profil resmi SMK Negeri 6 Yogyakarta', 'order' => 1],
-            ['title' => 'Kegiatan MPLS SMKN 6 Yogyakarta', 'description' => 'Masa Pengenalan Lingkungan Sekolah tahun ajaran baru', 'order' => 2],
-            ['title' => 'Praktik Kitchen Siswa Kuliner', 'description' => 'Dokumentasi praktik kitchen siswa program keahlian Kuliner', 'order' => 3],
-            ['title' => 'Tour Virtual SMKN 6 Yogyakarta', 'description' => 'Virtual tour mengenal lingkungan dan fasilitas SMKN 6 Yogyakarta', 'order' => 4],
-            ['title' => 'Testimoni Alumni SMKN 6 Yogyakarta', 'description' => 'Testimoni para alumni sukses SMKN 6 Yogyakarta', 'order' => 5],
-            ['title' => 'Praktik Room Service Perhotelan', 'description' => 'Praktik room service siswa program keahlian Perhotelan', 'order' => 6],
-        ];
-
-        foreach ($videos as $v) {
-            Video::factory()->create($v);
-        }
-
-        Video::factory()->count(5)->create();
     }
 
     private function createAchievements(): void

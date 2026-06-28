@@ -51,7 +51,7 @@
             </div>
 
             <!-- Desktop Menu -->
-            <ul class="hidden lg:flex items-center gap-5 text-white">
+            <ul class="hidden lg:flex items-center gap-5 text-white ml-auto">
                 @foreach($menuItems as $item)
                     @if($item->children->count() > 0)
                         <li class="relative group">

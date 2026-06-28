@@ -48,5 +48,9 @@
     @else
     <div class="text-center py-16 text-gray-400">Belum ada data guru &amp; karyawan.</div>
     @endif
+
+    <div class="mt-8">
+        {{ $teachers->links() }}
+    </div>
 </div>
 @endsection
