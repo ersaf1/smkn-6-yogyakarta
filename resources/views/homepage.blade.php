@@ -334,25 +334,15 @@
 
 {{-- ===================== VIDEO BANNER ===================== --}}
 @if($videoBanners->count() > 0)
-<section class="w-full bg-black py-12">
-    <div class="max-w-7xl mx-auto px-4 mb-8">
-        <h2 class="text-3xl font-bold text-center text-white uppercase tracking-widest">Video Banner</h2>
-    </div>
-    <div class="flex overflow-x-auto gap-4 px-4 pb-4" style="scrollbar-width: none; -ms-overflow-style: none;">
-        @foreach($videoBanners as $video)
-        <div class="flex-shrink-0 w-full sm:w-80 md:w-96 h-64 rounded-xl overflow-hidden">
-            @if($video->video_file)
-            <video class="w-full h-full object-cover rounded-xl" controls preload="metadata" playsinline
-                   @if($video->thumbnail) poster="{{ Storage::url($video->thumbnail) }}" @endif>
-                <source src="{{ $video->video_url }}" type="video/mp4">
-            </video>
-            @else
-            <div class="w-full h-full flex items-center justify-center text-gray-500 text-sm bg-zinc-900 rounded-xl">Belum ada video</div>
-            @endif
-        </div>
-        @endforeach
-    </div>
+@php $firstBanner = $videoBanners->first(); @endphp
+@if($firstBanner->video_file)
+<section class="w-full bg-black overflow-hidden">
+    <video class="w-full object-cover" style="max-height: 90vh;" autoplay muted loop playsinline preload="metadata"
+           @if($firstBanner->thumbnail) poster="{{ Storage::url($firstBanner->thumbnail) }}" @endif>
+        <source src="{{ $firstBanner->video_url }}" type="video/mp4">
+    </video>
 </section>
+@endif
 @endif
 
 @endsection
