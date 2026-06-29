@@ -18,6 +18,7 @@ class VideoFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title),
             'description' => fake()->paragraph(),
+            'section' => 'video',
             'video_file' => 'videos/sample.mp4',
             'thumbnail' => null,
             'order' => fake()->numberBetween(0, 30),

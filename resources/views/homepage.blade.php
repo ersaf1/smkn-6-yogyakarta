@@ -4,7 +4,7 @@
 
 {{-- ===================== HERO SLIDER ===================== --}}
 @if($sliders->count() > 0)
-<section class="relative h-[500px] md:h-[600px] overflow-hidden"
+<section class="relative min-h-screen overflow-hidden bg-dark" style="min-height: 100dvh;"
     x-data="{
         current: 0,
         total: {{ $sliders->count() }},
@@ -25,7 +25,7 @@
     </div>
     @endforeach
     <div class="absolute inset-0 hero-gradient z-20"></div>
-    <div class="relative z-30 h-full flex flex-col justify-center items-start px-4 sm:px-20 max-w-7xl mx-auto text-white">
+    <div class="absolute inset-0 z-30 flex flex-col justify-center items-start px-4 sm:px-20 max-w-7xl mx-auto text-white">
         <p class="text-lg md:text-xl font-medium mb-2"># {{ $sliders->first()->subtitle ?? 'Sekolah Unggul' }}</p>
         <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-8 tracking-tight text-white">{{ strtoupper($siteName ?? 'SMKN 6 YOGYAKARTA') }}</h1>
         <a href="{{ $sliders->first()->button_url ?? route('contact.index') }}"
@@ -333,18 +333,21 @@
 @endif
 
 {{-- ===================== VIDEO BANNER ===================== --}}
-@if($videos->count() > 0)
-<section class="w-full bg-black">
-    <div class="flex overflow-x-auto" style="scrollbar-width: none; -ms-overflow-style: none;">
-        @foreach($videos as $video)
-        <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+@if($videoBanners->count() > 0)
+<section class="w-full bg-black py-12">
+    <div class="max-w-7xl mx-auto px-4 mb-8">
+        <h2 class="text-3xl font-bold text-center text-white uppercase tracking-widest">Video Banner</h2>
+    </div>
+    <div class="flex overflow-x-auto gap-4 px-4 pb-4" style="scrollbar-width: none; -ms-overflow-style: none;">
+        @foreach($videoBanners as $video)
+        <div class="flex-shrink-0 w-full sm:w-80 md:w-96 h-64 rounded-xl overflow-hidden">
             @if($video->video_file)
-            <video class="w-full h-full object-cover" controls preload="metadata" playsinline
+            <video class="w-full h-full object-cover rounded-xl" controls preload="metadata" playsinline
                    @if($video->thumbnail) poster="{{ Storage::url($video->thumbnail) }}" @endif>
                 <source src="{{ $video->video_url }}" type="video/mp4">
             </video>
             @else
-            <div class="w-full h-full flex items-center justify-center text-gray-500 text-sm bg-zinc-900">Belum ada video</div>
+            <div class="w-full h-full flex items-center justify-center text-gray-500 text-sm bg-zinc-900 rounded-xl">Belum ada video</div>
             @endif
         </div>
         @endforeach

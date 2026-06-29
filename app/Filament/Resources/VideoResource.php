@@ -47,6 +47,13 @@ class VideoResource extends Resource
                         ->image()
                         ->directory('videos/thumbnails')
                         ->previewable(true),
+                    Forms\Components\Select::make('section')
+                        ->options([
+                            'video' => 'Video',
+                            'banner' => 'Banner',
+                        ])
+                        ->default('video')
+                        ->required(),
                     Forms\Components\TextInput::make('order')
                         ->numeric()
                         ->default(0),
@@ -67,6 +74,12 @@ class VideoResource extends Resource
                 Tables\Columns\TextColumn::make('video_file')
                     ->label('Video')
                     ->limit(30),
+                Tables\Columns\TextColumn::make('section')
+                    ->badge()
+                    ->colors([
+                        'primary' => 'video',
+                        'success' => 'banner',
+                    ]),
                 Tables\Columns\TextColumn::make('order')
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')

@@ -38,6 +38,8 @@ class DummySeeder extends Seeder
         $this->createDownloads();
         $this->createContactMessages();
         $this->createAccordions();
+        $this->createVideos();
+        $this->createVideoBanners();
         $this->updatePages();
         $this->updateCompetencies();
         $this->updateStatistics();
@@ -62,6 +64,89 @@ class DummySeeder extends Seeder
         );
 
         User::factory()->count(5)->create();
+    }
+
+    private function createVideos(): void
+    {
+        $videoItems = [
+            [
+                'title' => 'Profil Usaha Perjalanan Wisata',
+                'description' => 'Program keahlian Usaha Perjalanan Wisata SMKN 6 Yogyakarta',
+                'section' => 'video',
+                'video_file' => 'videos/upw.mp4',
+                'order' => 1,
+            ],
+            [
+                'title' => 'Profil Perhotelan',
+                'description' => 'Program keahlian Perhotelan SMKN 6 Yogyakarta',
+                'section' => 'video',
+                'video_file' => 'videos/perhotelan.mp4',
+                'order' => 2,
+            ],
+            [
+                'title' => 'Profil Kuliner',
+                'description' => 'Program keahlian Kuliner SMKN 6 Yogyakarta',
+                'section' => 'video',
+                'video_file' => 'videos/kuliner.mp4',
+                'order' => 3,
+            ],
+        ];
+
+        foreach ($videoItems as $v) {
+            \App\Models\Video::factory()->create($v);
+        }
+    }
+
+    private function createVideoBanners(): void
+    {
+        $banners = [
+            [
+                'title' => 'Profil SMKN 6 Yogyakarta',
+                'description' => 'Video profil sekolah menengah kejuruan negeri 6 Yogyakarta',
+                'section' => 'banner',
+                'video_file' => 'videos/banner/profil-sekolah.mp4',
+                'order' => 1,
+            ],
+            [
+                'title' => 'Fasilitas Sekolah',
+                'description' => 'Tour fasilitas lengkap SMKN 6 Yogyakarta',
+                'section' => 'banner',
+                'video_file' => 'videos/banner/fasilitas.mp4',
+                'order' => 2,
+            ],
+            [
+                'title' => 'Kegiatan PPDB 2026',
+                'description' => 'Informasi Penerimaan Peserta Didik Baru tahun ajaran 2026/2027',
+                'section' => 'banner',
+                'video_file' => 'videos/banner/ppdb-2026.mp4',
+                'order' => 3,
+            ],
+            [
+                'title' => 'Praktik Kerja Lapangan',
+                'description' => 'Kegiatan PKL siswa di industri mitra',
+                'section' => 'banner',
+                'video_file' => 'videos/banner/pkl.mp4',
+                'order' => 4,
+            ],
+            [
+                'title' => 'Ekstrakurikuler Unggulan',
+                'description' => 'Kegiatan ekstrakurikuler SMKN 6 Yogyakarta',
+                'section' => 'banner',
+                'video_file' => 'videos/banner/ekskul.mp4',
+                'order' => 5,
+            ],
+            [
+                'title' => 'Prestasi Siswa',
+                'description' => 'Deretan prestasi siswa SMKN 6 Yogyakarta',
+                'section' => 'banner',
+                'video_file' => 'videos/banner/prestasi.mp4',
+                'order' => 6,
+            ],
+        ];
+
+        foreach ($banners as $b) {
+            \App\Models\Video::factory()->create($b);
+        }
     }
 
     private function createSliders(): void
@@ -596,4 +681,5 @@ class DummySeeder extends Seeder
             'suffix' => '+',
         ]);
     }
+
 }

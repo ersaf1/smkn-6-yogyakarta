@@ -26,7 +26,9 @@ class HomepageController extends Controller
             ->limit(3)
             ->get();
         $partners = Partner::where('is_active', true)->orderBy('order')->get();
-        $videos = Video::where('is_active', true)->orderBy('order')->limit(3)->get();
+        $videos = Video::where('is_active', true)->videos()->orderBy('order')->limit(3)->get();
+        $videoBanners = Video::where('is_active', true)->banners()->orderBy('order')->get();
+
 
         $kepalaSekolahName = Setting::get('kepala_sekolah_name', 'Mujari, S.Pd, M.Pd');
         $kepalaSekolahPhoto = Setting::get('kepala_sekolah_photo', '');
@@ -35,7 +37,7 @@ class HomepageController extends Controller
 
         return view('homepage', compact(
             'sliders', 'accordions', 'competencies', 'statistics',
-            'news', 'partners', 'videos', 'kepalaSekolahName', 'kepalaSekolahPhoto',
+            'news', 'partners', 'videos', 'videoBanners', 'kepalaSekolahName', 'kepalaSekolahPhoto',
             'sambutanText', 'siteName'
         ));
     }

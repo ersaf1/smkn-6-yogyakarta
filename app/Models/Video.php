@@ -12,9 +12,19 @@ class Video extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'title', 'slug', 'description', 'video_file',
+        'title', 'slug', 'description', 'section', 'video_file',
         'thumbnail', 'order', 'is_active'
     ];
+
+    public function scopeVideos($query)
+    {
+        return $query->where('section', 'video');
+    }
+
+    public function scopeBanners($query)
+    {
+        return $query->where('section', 'banner');
+    }
 
     protected $casts = [
         'is_active' => 'boolean',
